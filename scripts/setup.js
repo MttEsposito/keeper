@@ -1,41 +1,46 @@
 const ELECTRON_FILE_NAME = "electron_main.js";
+class Setup {
 
-const writeInfoLog = (message) => {
-    console.log(`[${new Date().toISOString()}]   ${message}`);
-}
-
-const writeErrorLog = (error) => {
-    console.error(error);
-}
-
-const init = () => {
-
-    writeInfoLog("Setup js init");
-
-    const action = process.argv[2];
-
-    writeInfoLog(`Action called: ${action}`);
-
-    switch (action) {
-        case "--main":
-            buildMain();
-            break;
-        case "--minify":
-            minifyJs();
-            break;
-        default:
-            writeErrorLog(`[${new Date().toISOString()}]   Wrong acton invoked`);
-            break;
+    constructor() {
+        this.init();
     }
-}
 
-const buildMain = async () => {
+    writeInfoLog(message) {
+        console.log(`[${new Date().toISOString()}]   ${message}`);
+    }
 
-    writeInfoLog(`Build main invoked`);
+    writeErrorLog(error) {
+        console.error(error);
+    }
 
-    const fse = require('fs-extra');
+    init() {
 
-    const libriaries = `
+        this.writeInfoLog("Setup js init");
+
+        const action = process.argv[2];
+
+        this.writeInfoLog(`Action called: ${action}`);
+
+        switch (action) {
+            case "--main":
+                this.buildMain();
+                break;
+            case "--minify":
+                this.minifyJs();
+                break;
+            default:
+                this.writeErrorLog(`[${new Date().toISOString()}]   Wrong acton invoked`);
+                break;
+        }
+    }
+
+    async buildMain() {
+        try {
+            this.writeInfoLog(`Build main invoked`);
+
+            const fse = require('fs-extra');
+
+            const libriaries = `
 const { app, BrowserWindow, ipcMain } = require('electron');
 const { autoUpdater } = require("electron-updater");
 const cryptoJs = require("crypto-js");
@@ -44,93 +49,98 @@ const { homedir,type,platform } = require('os');
 const { WindowsToaster } = require("node-notifier");
 const LOG = require('electron-log');
 `;
-    writeInfoLog(`Start concat file`);
+            this.writeInfoLog(`Start concat file`);
 
-    let fileString = [];
+            let fileString = [];
 
-    const files = [
-        `${__dirname}/../src/electron/constants.js`,
-        `${__dirname}/../src/electron/main.js`,
-        `${__dirname}/../src/electron/events.js`,
-        `${__dirname}/../src/electron/fs-extra.js`,
-        `${__dirname}/../src/electron/crypto.js`
-    ];
-    fileString.push(libriaries);
+            const files = [
+                `${__dirname}/../src/electron/constants.js`,
+                `${__dirname}/../src/electron/main.js`,
+                `${__dirname}/../src/electron/events.js`,
+                `${__dirname}/../src/electron/fs-extra.js`,
+                `${__dirname}/../src/electron/crypto.js`
+            ];
 
-    for (const f of files) {
-        try {
-            const content = await fse.readFile(f, 'utf8')
-            if (content.includes("class")) {
-                fileString.push(content.substring(content.indexOf("class")));
-            } else {
-                const initCut = content.indexOf("export") + 6;
-                fileString.push(content.substring(initCut));
+            fileString.push(libriaries);
+
+            for (const f of files) {
+                try {
+                    const content = await fse.readFile(f, 'utf8')
+                    if (content.includes("class")) {
+                        fileString.push(content.substring(content.indexOf("class")));
+                    } else {
+                        const initCut = content.indexOf("export") + 6;
+                        fileString.push(content.substring(initCut));
+                    }
+                } catch (err) {
+                    this.writeErrorLog(err)
+                }
             }
+
+            fileString.push("new Electron().electronStart();");
+
+            const output = fileString.join("\n");
+
+            const file = output.replace(/export/g, '');
+
+            this.writeInfoLog(`Content file generated`);
+
+            await fse.writeFile("bundle.js", file);
+
+            this.writeInfoLog(`File created`);
+
+            this.writeInfoLog(`End concat file`);
+
+            this.writeInfoLog(`Build bundle succed!`);
+
+            this.minifyJs();
         } catch (err) {
-            writeErrorLog(err)
+            this.writeErrorLog(err)
         }
     }
 
-    fileString.push("new Electron().electronStart();");
+    async minifyJs() {
+        try {
+            this.writeInfoLog(`Minify installer invoked`);
 
-    const output = fileString.join("\n");
+            const compressor = require('node-minify');
 
-    const file = output.replace(/export/g, '');
+            this.writeInfoLog(`Start minify js`);
 
-    writeInfoLog(`Content file generated`);
+            const babel = {
+                compressor: "babel-minify",
+                input: `bundle.js`,
+                output: ELECTRON_FILE_NAME,
+                options: {
+                    babelrc: 'scripts/.babelrc',
+                    presets: ["minify"]
+                },
+            };
 
-    await fse.writeFile("bundle.js", file);
+            await compressor.minify(babel);
 
-    writeInfoLog(`File created`);
+            this.writeInfoLog(`Minify done!`);
 
-    writeInfoLog(`End concat file`);
+            this.writeInfoLog(`Output file ${ELECTRON_FILE_NAME} generated`);
 
-    writeInfoLog(`Build bundle succed!`);
+            this.writeInfoLog(`Removing old file`);
 
-    minifyJs();
-}
+            const fse = require('fs-extra');
 
-const minifyJs = async () => {
-    try {
-        writeInfoLog(`Minify installer invoked`);
+            let promises = [
+                fse.remove("./bundle.js")
+            ];
 
-        const compressor = require('node-minify');
+            await Promise.all(promises);
 
-        writeInfoLog(`Start minify js`);
+            this.writeInfoLog(`Old file removed`);
 
-        const babel = {
-            compressor: "babel-minify",
-            input: `bundle.js`,
-            output: ELECTRON_FILE_NAME,
-            options: {
-                babelrc: 'scripts/.babelrc',
-                presets: ["minify"]
-            },
-        };
+            this.writeInfoLog(`Setup js end`);
 
-        await compressor.minify(babel);
-
-        writeInfoLog(`Minify done!`);
-
-        writeInfoLog(`Output file keeper_electron_main.js generated`);
-
-        writeInfoLog(`Removing old file`);
-
-        const fse = require('fs-extra');
-
-        let promises = [
-            fse.remove("./bundle.js")
-        ];
-
-        await Promise.all(promises);
-
-        writeInfoLog(`Old file removed`);
-
-        writeInfoLog(`Setup js end`);
-
-    } catch (error) {
-        writeErrorLog(error)
+        } catch (err) {
+            this.writeErrorLog(err)
+        }
     }
 }
 
-init();
+new Setup();
