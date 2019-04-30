@@ -3,6 +3,7 @@
   "description": "keeper is a tool for saving offline data account",
   "main": "electron_main.js",
   "version": "0.1.0",
+  "author": "Mattia Esposito",
   "license": "ISC",
   "scripts": {
     "ng": "ng",
