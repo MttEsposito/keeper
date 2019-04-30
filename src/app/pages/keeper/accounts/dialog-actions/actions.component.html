@@ -1,0 +1,88 @@
+<ng-container>
+
+    <form #actions="ngForm" autocomplete="off" (ngSubmit)="actionSub(data.action,actions)">
+
+        <h1 mat-dialog-title>{{data.action}} account</h1>
+
+        <div mat-dialog-content>
+
+            <div *ngIf="data.action === 'Add'|| data.action === 'Edit'">
+
+                <table class="full-width" cellspacing="5">
+
+                    <tr>
+
+                        <td>
+                            <mat-form-field class="full-width">
+                                <input [(ngModel)]="title" matInput placeholder="Title" name="title">
+                            </mat-form-field>
+                        </td>
+
+                        <td>
+                            <mat-form-field class="full-width">
+                                <input [(ngModel)]="link" matInput placeholder="Url" name="link">
+                            </mat-form-field>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            <mat-form-field class="full-width">
+                                <input [(ngModel)]="username" required matInput placeholder="User-Id" name="username">
+                            </mat-form-field>
+                        </td>
+
+                        <td>
+                            <mat-form-field class="full-width">
+                                <input [(ngModel)]="password" matInput required name="password" placeholder="Password" [type]="hide ? 'password' : 'text'">
+                                <mat-icon matSuffix (click)="hide= !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </mat-form-field>
+                        </td>
+
+                    </tr>
+                </table>
+
+                <table class="full-width" cellspacing="5">
+
+                    <tr>
+
+                        <td>
+                            <mat-form-field class="full-width">
+                                <textarea [(ngModel)]="desc" matInput name="desc" placeholder="Description"></textarea>
+                            </mat-form-field>
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+            <div *ngIf="data.action==='Remove'">
+                <p>You're going to delete this account "<strong>{{data.record.title}}</strong>".</p>
+                <p>This action is irreversable are you sure?</p>
+            </div>
+
+        </div>
+
+
+
+        <div mat-dialog-actions align="end">
+
+            <button type="button" 
+                mat-raised-button 
+                [mat-dialog-close]="'cancel'" 
+                [disabled]="submitted"
+                color="warn">Cancel</button>
+            <button type="submit" 
+                mat-raised-button
+                [disabled]="actions.invalid || submitted"
+                 color="primary">Confirm</button>
+
+        </div>
+
+    </form>
+
+</ng-container>

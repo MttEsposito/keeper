@@ -1,0 +1,71 @@
+<ng-container>
+  <div>
+
+    <mat-sidenav-container class="sidenav-container">
+
+      <mat-sidenav #snav mode="side" fixedInViewport="true">
+        
+        <div class="sidenav-content">
+
+          <div class="sidenav-header">
+
+            <button mat-icon-button (click)="snav.toggle()" class="sidenav-close">
+              <mat-icon>close</mat-icon>
+            </button>
+
+            <h2>Keeper <span class="app-version">{{version}}</span></h2>
+            <p>Keep all your account data safe offline.</p>
+
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <h4>Sections</h4>
+
+          <div *ngFor="let section of sections">
+
+            <a mat-button class="sidenav-action" [routerLink]="section.link">
+              <mat-icon>{{section.icon}}</mat-icon> {{section.label}}
+            </a>
+
+          </div>
+          
+        </div>
+      </mat-sidenav>
+
+      <mat-sidenav-content>
+
+        <div class="toolbar-fixed">
+
+          <mat-toolbar color="primary">
+            
+            <button mat-icon-button (click)="snav.toggle()">
+              <mat-icon>menu</mat-icon>
+            </button>
+
+            <h1>Keeper {{user.username}}</h1>
+
+            <span class="toolbar-spacer"></span>
+
+            <button mat-icon-button (click)="signOut()" matTooltip="sign out" matTooltipPosition="left">
+              <mat-icon>exit_to_app</mat-icon>
+            </button>
+
+          </mat-toolbar>
+
+        </div>
+
+        <div class="toolbar-fixed-spacer"></div>
+
+        <div class="content-child">
+          <router-outlet></router-outlet>
+        </div>
+
+
+      </mat-sidenav-content>
+
+    </mat-sidenav-container>
+
+  </div>
+  
+</ng-container>

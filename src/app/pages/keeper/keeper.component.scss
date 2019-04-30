@@ -1,0 +1,46 @@
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.toolbar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 600;
+}
+
+.toolbar-fixed-spacer {
+  height: 57px;
+}
+
+.sidenav-container{
+  height: 100vh;
+}
+
+.sidenav-content {
+  padding: 0.5em;
+}
+
+.sidenav-close {
+  float: right;
+  top: -20px;
+  &:hover{
+    opacity: 0.7;
+  }
+}
+
+.sidenav-action{
+  width: 100%;
+  text-align: left;
+}
+
+.content-child {
+  padding: 1em;
+}
+
+.app-version{
+  font-size: 11px;
+  color: #ccc
+}

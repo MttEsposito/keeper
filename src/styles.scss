@@ -1,1 +1,209 @@
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+// custom scrollbar style
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.432);
+}
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~@angular/material/theming";
+@include mat-core();
+/* style for toast message */
+
+.toast-success {
+  color: rgb(60, 118, 61);
+  background-color: rgb(223, 240, 216);
+  border-color: rgb(214, 233, 198);
+  font-weight: 700;
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mat-simple-snackbar-action {
+    color: rgba(0, 0, 0, 0.87);
+  }
+}
+
+.toast-danger {
+  color: rgb(169, 68, 66);
+  background-color: rgb(242, 222, 222);
+  border-color: rgb(235, 204, 209);
+  font-weight: 700;
+  span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mat-simple-snackbar-action {
+    color: rgba(0, 0, 0, 0.87);
+  }
+}
+
+.toast-info {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
+
+// custom themes
+
+.dark-themes {
+  $dark-primary: mat-palette($mat-pink, 700, 500, 900);
+  $dark-accent: mat-palette($mat-blue-grey, A200, A100, A400);
+  $dark-warn: mat-palette($mat-deep-orange);
+  $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+  @include angular-material-theme($dark-theme);
+}
+
+.light-blue-theme {
+  $alternate-primary: mat-palette($mat-light-blue);
+  $alternate-accent: mat-palette($mat-yellow, 400);
+  $light-blue-theme: mat-light-theme($alternate-primary, $alternate-accent);
+  @include angular-material-theme($light-blue-theme);
+}
+
+// Building loader style
+
+@keyframes lds-facebook_1 {
+  0% {
+    top: 36px;
+    height: 128px;
+  }
+  50% {
+    top: 60px;
+    height: 80px;
+  }
+  100% {
+    top: 60px;
+    height: 80px;
+  }
+}
+@-webkit-keyframes lds-facebook_1 {
+  0% {
+    top: 36px;
+    height: 128px;
+  }
+  50% {
+    top: 60px;
+    height: 80px;
+  }
+  100% {
+    top: 60px;
+    height: 80px;
+  }
+}
+@keyframes lds-facebook_2 {
+  0% {
+    top: 41.99999999999999px;
+    height: 116.00000000000001px;
+  }
+  50% {
+    top: 60px;
+    height: 80px;
+  }
+  100% {
+    top: 60px;
+    height: 80px;
+  }
+}
+@-webkit-keyframes lds-facebook_2 {
+  0% {
+    top: 41.99999999999999px;
+    height: 116.00000000000001px;
+  }
+  50% {
+    top: 60px;
+    height: 80px;
+  }
+  100% {
+    top: 60px;
+    height: 80px;
+  }
+}
+@keyframes lds-facebook_3 {
+  0% {
+    top: 48px;
+    height: 104px;
+  }
+  50% {
+    top: 60px;
+    height: 80px;
+  }
+  100% {
+    top: 60px;
+    height: 80px;
+  }
+}
+@-webkit-keyframes lds-facebook_3 {
+  0% {
+    top: 48px;
+    height: 104px;
+  }
+  50% {
+    top: 60px;
+    height: 80px;
+  }
+  100% {
+    top: 60px;
+    height: 80px;
+  }
+}
+.lds-facebook {
+  position: relative;
+}
+.lds-facebook div {
+  position: absolute;
+  width: 30px;
+}
+.lds-facebook div:nth-child(1) {
+  left: 35px;
+  background: #1d3f72;
+  -webkit-animation: lds-facebook_1 1.4s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+  animation: lds-facebook_1 1.4s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+  -webkit-animation-delay: -0.28s;
+  animation-delay: -0.28s;
+}
+.lds-facebook div:nth-child(2) {
+  left: 85px;
+  background: #5699d2;
+  -webkit-animation: lds-facebook_2 1.4s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+  animation: lds-facebook_2 1.4s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+  -webkit-animation-delay: -0.14s;
+  animation-delay: -0.14s;
+}
+.lds-facebook div:nth-child(3) {
+  left: 135px;
+  background: #d8ebf9;
+  -webkit-animation: lds-facebook_3 1.4s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+  animation: lds-facebook_3 1.4s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.lds-facebook {
+  width: 200px !important;
+  height: 200px !important;
+  -webkit-transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
+  transform: translate(-100px, -100px) scale(1) translate(100px, 100px);
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

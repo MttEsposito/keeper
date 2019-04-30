@@ -1,0 +1,24 @@
+.btn-refresh {
+  position: absolute;
+  top: -12.5px;
+  left: 5px;
+}
+
+.desc-space {
+  padding: 0.5em 0 0 0 !important;
+}
+
+.acc-list {
+  padding: 1em;
+  position: relative;
+}
+
+.acc-fab-bottom-right {
+  position: fixed;
+  bottom: 8px;
+  right: 8px;
+  z-index: 500;
+  .icon-plus {
+    line-height: 0.95 !important;
+  }
+}

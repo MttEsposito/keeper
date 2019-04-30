@@ -1,0 +1,29 @@
+<form #create="ngForm" class="create-user" autocomplete="off" (ngSubmit)="createUser(create)">
+
+    <h1 mat-dialog-title>Create user</h1>
+
+    <div mat-dialog-content>
+
+        <p>Fill the form for create a new user</p>
+
+        <mat-form-field class="create-input">
+            <input type="text" ngModel required matInput placeholder="User-ID" name="username">
+        </mat-form-field>
+        
+        <mat-form-field class="create-input">
+            <input type="password" ngModel required matInput placeholder="Password" name="password">
+        </mat-form-field>
+        
+    </div>
+
+
+
+    <div mat-dialog-actions align="end">
+
+        <button mat-raised-button type="button" [mat-dialog-close]="'cancel'" [disabled]="submitted" color="warn">Cancel</button>
+        <button type="submit" [disabled]="create.invalid || submitted" mat-raised-button color="primary"> Create
+        </button>
+
+    </div>
+    
+</form>

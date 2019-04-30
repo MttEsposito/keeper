@@ -1,0 +1,98 @@
+<ng-container>
+    <mat-card>
+
+        <mat-card-header>
+            <mat-card-title>Accounts</mat-card-title>
+            <mat-card-subtitle>Manage your account data</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+            <div class="acc-list">
+
+                <button type="button" 
+                    class="btn-refresh" 
+                    mat-icon-button 
+                    (click)="getUserData()"
+                    color="primary" 
+                    [disabled]="hideAll">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+
+                <mat-list>
+
+                    <h3 mat-subheader>Accounts visibility {{hideAll ? 'off':'on'}}
+                        <button mat-icon-button (click)="hideAll= !hideAll">
+                            <mat-icon>{{hideAll ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </h3>
+
+                    <mat-list-item *ngFor="let acc of accounts">
+
+                        <h4 mat-line>
+                            Account: {{hideAll ? "••••••" : acc.title}}
+                        </h4>
+
+                        <h4 mat-line class="desc-space">
+                            <span class="item-user">
+                                Username: {{hideAll ? "••••••" : acc.username }}
+                            </span>
+                            <span class="item-user">
+                                Password: {{hideAll ? "••••••" : acc.password}}
+                            </span>
+                        </h4>
+
+                        <p mat-line class="desc-space">Description: {{hideAll ? "••••••" : acc.desc}}</p>
+                        
+                        <div mat-line align="end">
+
+                            <button type="button"
+                                mat-icon-button
+                                (click)="openDialog('Remove',acc)" 
+                                matTooltip="Delete"
+                                matTooltipPosition="above"
+                                color="warn"
+                                [disabled]="hideAll">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+
+                            <button type="button" 
+                                mat-icon-button
+                                color="primary"
+                                matTooltip="Edit"
+                                matTooltipPosition="above"
+                                (click)="openDialog('Edit',acc)"
+                                [disabled]="hideAll">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+
+                            <button type="button" 
+                                mat-icon-button
+                                color="primary"
+                                matTooltip="Open website"
+                                matTooltipPosition="above"
+                                (click)="redirectTo(acc.link)"
+                                [disabled]="hideAll">
+                                <mat-icon>language</mat-icon>
+                            </button>
+
+                        </div>
+
+                        <mat-divider [inset]="true"></mat-divider>
+
+                    </mat-list-item>
+
+                </mat-list>
+
+            </div>
+
+        </mat-card-content>
+
+    </mat-card>
+
+    <div class="acc-fab-bottom-right">
+        <button type="button" (click)="openDialog('Add',{})" mat-mini-fab color="primary">
+            <mat-icon class="icon-plus">add</mat-icon>
+        </button>
+    </div>
+
+</ng-container>

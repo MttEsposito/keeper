@@ -1,0 +1,96 @@
+<ng-container>
+
+  <mat-card>
+
+    <mat-card-header>
+      <mat-card-title>Settings</mat-card-title>
+      <mat-card-subtitle>Manage settings for the app</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <div>
+
+        <mat-accordion multi="true" class="example-headers-align">
+
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Change password
+              </mat-panel-title>
+              <mat-panel-description>
+                change password of the keeper account
+                <mat-icon color="primary">account_circle</mat-icon>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <ng-template matExpansionPanelContent>
+              <form #cpassword="ngForm" autocomplete="off"
+                (ngSubmit)="changePassword(cpassword)">
+                <table class="full-width" cellspacing="5">
+                  <tr>
+                    <td>
+                      <mat-form-field class="full-width">
+                        <input ngModel matInput required
+                          name="password" placeholder="Password"
+                          [type]="hide ? 'password' : 'text'">
+                        <mat-icon matSuffix (click)="hide= !hide">{{hide ?
+                          'visibility_off' : 'visibility'}}</mat-icon>
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <mat-form-field class="full-width">
+                        <input ngModel matInput required
+                          name="cpassword" placeholder="Confirm password"
+                          [type]="hide ? 'password' : 'text'">
+                        <mat-icon matSuffix (click)="hide= !hide">{{hide ?
+                          'visibility_off' : 'visibility'}}</mat-icon>
+                      </mat-form-field>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td style="text-align:right">
+                      <button type="submit" [disabled]="cpassword.invalid ||
+                        submitted" mat-raised-button color="primary"> Change
+                      </button>
+                    </td>
+                  </tr>
+                </table>
+              </form>
+            </ng-template>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel hideToggle>
+
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Change theme
+              </mat-panel-title>
+              <mat-panel-description>
+                change theme for keeper
+                <mat-icon color="primary">brush</mat-icon>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <ng-template matExpansionPanelContent>
+
+              <mat-form-field>
+                <mat-label>Pick a theme</mat-label>
+                <mat-select [(ngModel)]="pickedTheme" (selectionChange)="changeTheme()">
+                  <mat-option *ngFor="let theme of themes" [value]="theme.value">
+                    {{theme.label}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+            </ng-template>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</ng-container>

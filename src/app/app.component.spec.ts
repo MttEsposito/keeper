@@ -1,16 +1,28 @@
 import { TestBed, async } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ThemeService } from 'src/app/services/theme.service';
+import { MatSnackBarModule } from '@angular/material';
+import { NgxElectronModule, ElectronService } from 'ngx-electron';
+import { FakeElectronService } from 'tests/electron-faker.service';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule, 
+        MatSnackBarModule, 
+        NgxElectronModule
       ],
       declarations: [
         AppComponent
       ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      providers: [
+        ThemeService, 
+        { provide: ElectronService, useClass: FakeElectronService }
+      ]
     }).compileComponents();
   }));
 
@@ -18,18 +30,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'keeper'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('keeper');
-  });
-
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to keeper!');
   });
 });

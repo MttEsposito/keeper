@@ -1,25 +1,42 @@
 {
   "name": "keeper",
-  "version": "0.0.0",
+  "description": "keeper is a tool for saving offline data account",
+  "main": "electron_main.js",
+  "version": "0.1.0",
+  "license": "ISC",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "electron": "electron .",
+    "build-prod": "ng build --prod && npm run gen-main",
+    "gen-main": "node scripts/setup.js --main",
+    "build-win-32": "build -w --ia32 -p always",
+    "build-win-64": "build -w --x64 -p always"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "~7.2.0",
+    "@angular/cdk": "~7.3.7",
     "@angular/common": "~7.2.0",
     "@angular/compiler": "~7.2.0",
     "@angular/core": "~7.2.0",
     "@angular/forms": "~7.2.0",
+    "@angular/material": "^7.3.7",
     "@angular/platform-browser": "~7.2.0",
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
     "core-js": "^2.5.4",
+    "crypto-js": "^3.1.9-1",
+    "electron-log": "^3.0.5",
+    "electron-updater": "^4.0.6",
+    "fs-extra": "^7.0.1",
+    "ngx-electron": "^2.1.1",
+    "node-notifier": "^5.4.0",
+    "os": "^0.1.1",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
@@ -29,10 +46,13 @@
     "@angular/cli": "~7.3.8",
     "@angular/compiler-cli": "~7.2.0",
     "@angular/language-service": "~7.2.0",
-    "@types/node": "~8.9.4",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~8.9.4",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-minify": "^0.5.0",
     "codelyzer": "~4.5.0",
+    "electron": "^5.0.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.0.0",
@@ -40,9 +60,45 @@
     "karma-coverage-istanbul-reporter": "~2.0.1",
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "node-minify": "^3.6.0",
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "typescript": "~3.2.2"
+  },
+  "build": {
+    "appId": "com.keeper.app",
+    "productName": "keeper",
+    "asar": true,
+    "directories": {
+      "output": "public/windows"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "MttEsposito",
+        "repo": "Keeper",
+        "private": false,
+        "token": "47ca021be5e1785c9b3c5ba4b422bd9e0a505517",
+        "releaseType": "release"
+      }
+    ],
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "uninstallDisplayName": "Keeper uninstall"
+    },
+    "win": {
+      "target": "nsis",
+      "publisherName": "hysteria software",
+      "icon": "icon.ico",
+      "verifyUpdateCodeSignature": false,
+      "requestedExecutionLevel": "highestAvailable"
+    }
   }
 }

@@ -1,0 +1,59 @@
+<ng-container>
+
+  <div id="SignIn" class="sign-spacer">
+
+    <mat-card>
+
+      <mat-card-title>Keeper</mat-card-title>
+      <mat-card-subtitle>Keep your password secretly offline</mat-card-subtitle>
+      
+      <div>
+        <br>
+      </div>
+      
+      <form #sign="ngForm" (ngSubmit)="signInUser(sign)" class="sign-form" autocomplete="off">
+
+        <mat-form-field class="sign-input">
+          <input type="text"
+            ngModel
+            required
+            matInput
+            placeholder="User-ID"
+            name="username">
+        </mat-form-field>
+
+        <mat-form-field class="sign-input">
+          <input type="password"
+            ngModel
+            required
+            matInput
+            placeholder="Password"
+            name="password">
+        </mat-form-field>
+
+        <div>
+          <br>
+        </div>
+
+        <button type="submit"
+          [disabled]="sign.invalid || submitted"
+          mat-stroked-button
+          color="primary"> Sign in
+        </button>
+
+      </form>
+
+      <div>
+
+      </div>
+    </mat-card>
+
+  </div>
+
+  <div class="sign-fab-bottom-right">
+    <button type="button" (click)="openDialog()" mat-mini-fab color="primary">
+      <mat-icon>person_add</mat-icon>
+    </button>
+  </div>
+
+</ng-container>
