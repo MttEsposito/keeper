@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ElectronService } from 'ngx-electron';
 
 import { AuthService } from 'src/app/services/auth.service';
+import { ThemeService } from 'src/app/services/theme.service';
 
 import { User } from 'src/app/models/user.interface';
 import { Section } from 'src/app/models/section.interface';
@@ -17,7 +18,8 @@ export class KeeperComponent implements OnInit {
     private _auth: AuthService,
     private _electron: ElectronService,
     private _ngZone: NgZone,
-    private _route: Router
+    private _route: Router,
+    private _theme: ThemeService,
   ) {
     this._electron.ipcRenderer.on('versionReply', (event: any, arg: any) => {
       this._ngZone.run(() => {
@@ -40,6 +42,9 @@ export class KeeperComponent implements OnInit {
 
   public ngOnInit(): void {
     this.user = this._auth.get();
+    setTimeout(() => {
+      this._theme.setTheme();
+    }, 400);
     this._getVersion();
   }
 
@@ -47,9 +52,12 @@ export class KeeperComponent implements OnInit {
     this._electron.ipcRenderer.send("signOut", {});
   }
 
-  private _signOutRedirect():void{
+  private _signOutRedirect(): void {
     this._auth.remove();
     this._route.navigate(["/sign-in"]);
+    setTimeout(()=>{
+      this._theme.defaultTheme();
+    },400);
   }
 
   private _getVersion(): void {

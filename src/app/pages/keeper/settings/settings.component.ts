@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild, TemplateRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ElectronService } from 'ngx-electron';
 
@@ -8,6 +8,7 @@ import { ThemeService } from 'src/app/services/theme.service';
 import { ToastService } from 'src/app/services/toast.service';
 
 import { Themes } from 'src/app/models/themes.interface';
+import { Accordion } from 'src/app/models/accordion.interface';
 
 @Component({
   templateUrl: './settings.component.html',
@@ -31,11 +32,26 @@ export class SettingsComponent implements OnInit {
     })
   }
 
-  @ViewChild('cpassword') cpswForm: NgForm;
+  // form reference
+  @ViewChild('cpassword') public cpswForm: NgForm;
+  // template reference
+  @ViewChild('formCpassword') public formCpassword: TemplateRef<any>;
+  @ViewChild('themePicker') public themePicker: TemplateRef<any>;
 
   public submitted: boolean = false;
   public pickedTheme: string = "";
   public hide: boolean = true;
+  public accordions: Array<Accordion> = [{
+    title: "Change password",
+    description: "change password of the keeper account",
+    icon: "account_circle",
+    contentId: "formCpassword"
+  }, {
+    title: "Change theme",
+    description: "change theme for keeper",
+    icon: "brush",
+    contentId: "themePicker"
+  }];
   public themes: Array<Themes> = [{
     value: "",
     label: "Defalut-blue"

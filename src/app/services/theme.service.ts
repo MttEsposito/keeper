@@ -1,22 +1,30 @@
 import { Injectable } from '@angular/core';
+import { AuthService } from './auth.service';
 
 @Injectable()
 
 export class ThemeService {
 
-    constructor() { }
+    constructor(private auth: AuthService) { }
 
     public setTheme(): void {
-        const theme = localStorage.getItem("User_theme");
+        const { uid } = this.auth.get();
+        const theme = localStorage.getItem(uid);
         document.querySelector("body").className = theme;
     }
 
     public changeTheme(theme: string): void {
-        localStorage.setItem("User_theme",theme);
+        const { uid } = this.auth.get();
+        localStorage.setItem(uid, theme);
         this.setTheme();
     }
 
     public getTheme(): string {
-        return localStorage.getItem("User_theme") || "";
+        const { uid } = this.auth.get();
+        return localStorage.getItem(uid) || "";
+    }
+
+    public defaultTheme(): void {
+        document.querySelector("body").className = "";
     }
 }

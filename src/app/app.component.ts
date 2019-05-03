@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
   public ngOnInit(): void {
     this._loader.loading.subscribe(state => this.isLoading = state);
     this._auth.userSigned.subscribe(user => { });
-    this._theme.setTheme();
+    this._theme.defaultTheme();
   }
 
   public prepareOutlet(outlet: RouterOutlet): RouterOutlet {

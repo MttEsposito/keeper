@@ -9,6 +9,7 @@ class Electron {
     constructor() { }
 
     mainWindow;
+    isUpdating;
 
     electronStart() {
 
@@ -25,8 +26,10 @@ class Electron {
                 LOG.info("check for update");
                 autoUpdater.checkForUpdates();
                 setInterval(() => {
-                    LOG.info("check for update");
-                    autoUpdater.checkForUpdates();
+                    if (!this.isUpdating) {
+                        LOG.info("check for update");
+                        autoUpdater.checkForUpdates();
+                    }
                 }, 300000);// check for update every 5 minutes
             }, 30000);// check the update after 30 seconds app is opend
         });
@@ -62,7 +65,7 @@ class Electron {
         // hide the menu bar
         this.mainWindow.setMenu(null);
         // enable dev tools good for debug
-        // this.mainWindow.webContents.openDevTools();
+        this.mainWindow.webContents.openDevTools();
         this.mainWindow.on('closed', () => {
             this.mainWindow = null;
         })
@@ -145,6 +148,7 @@ class Electron {
         })
 
         autoUpdater.on('update-available', (info) => {
+            this.isUpdating = true;
             LOG.info("update-available");
         })
 
