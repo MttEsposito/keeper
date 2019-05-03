@@ -38,6 +38,7 @@ export class SettingsComponent implements OnInit {
   @ViewChild('formCpassword') public formCpassword: TemplateRef<any>;
   @ViewChild('themePicker') public themePicker: TemplateRef<any>;
 
+  public formHint: string = "input must be 7 chars long";
   public submitted: boolean = false;
   public pickedTheme: string = "";
   public hide: boolean = true;
@@ -81,7 +82,9 @@ export class SettingsComponent implements OnInit {
   }
 
   private _electronResponse(res: any): void {
-    this.cpswForm.resetForm();
+    if (res.message !== "Password and confirm password not match!") {
+      this.cpswForm.resetForm();
+    }
     this.submitted = false;
     this._loader.dismiss();
     this._toast.show(res.message, res.result ? "success" : "danger");

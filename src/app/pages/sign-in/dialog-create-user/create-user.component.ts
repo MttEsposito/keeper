@@ -28,6 +28,8 @@ export class CreateUserDialog implements OnInit {
         });
     }
 
+    public formHint: string ="input must be 7 chars long";
+    
     public submitted: boolean = false;
 
     public ngOnInit(): void {

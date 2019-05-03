@@ -11,9 +11,7 @@
 
       <div>
         <mat-accordion multi="true" class="example-headers-align">
-
           <mat-expansion-panel hideToggle *ngFor="let acc of accordions">
-
             <mat-expansion-panel-header>
 
               <mat-panel-title>
@@ -30,7 +28,7 @@
             <ng-template matExpansionPanelContent>
               <ng-container [ngTemplateOutlet]="this[acc.contentId]"></ng-container>
             </ng-template>
-            
+
           </mat-expansion-panel>
 
         </mat-accordion>
@@ -48,20 +46,31 @@
         <tr>
           <td>
             <mat-form-field class="full-width">
-              <input ngModel matInput required
-                name="password" placeholder="Password"
-                [type]="hide ? 'password' : 'text'">
+              <input [type]="hide ? 'password' : 'text'"
+                ngModel
+                matInput
+                minlength="7"
+                required
+                name="password"
+                placeholder="Password">
               <mat-icon matSuffix (click)="hide= !hide">{{hide ?
                 'visibility_off' : 'visibility'}}</mat-icon>
+              <mat-hint align="end">{{formHint}}</mat-hint>
+
             </mat-form-field>
           </td>
           <td>
             <mat-form-field class="full-width">
-              <input ngModel matInput required
-                name="cpassword" placeholder="Confirm password"
-                [type]="hide ? 'password' : 'text'">
+              <input [type]="hide ? 'password' : 'text'"
+                ngModel
+                matInput
+                minlength="7"
+                required
+                name="cpassword"
+                placeholder="Confirm password">
               <mat-icon matSuffix (click)="hide= !hide">{{hide ?
                 'visibility_off' : 'visibility'}}</mat-icon>
+              <mat-hint align="end">{{formHint}}</mat-hint>
             </mat-form-field>
           </td>
         </tr>
