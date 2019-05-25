@@ -2,7 +2,7 @@
   "name": "keeper",
   "description": "keeper is a tool for saving offline data account",
   "main": "electron_main.js",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "Mattia Esposito",
   "license": "ISC",
   "scripts": {
@@ -15,8 +15,8 @@
     "electron": "electron .",
     "build-prod": "ng build --prod && npm run gen-main",
     "gen-main": "node scripts/setup.js --main",
-    "build-win-32": "build -w --ia32 -p always",
-    "build-win-64": "build -w --x64 -p always"
+    "build-win-32": "build -w --ia32",
+    "build-win-64": "build -w --x64"
   },
   "private": true,
   "dependencies": {

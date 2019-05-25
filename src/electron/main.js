@@ -64,7 +64,7 @@ class Electron {
     // hide the menu bar
     this.mainWindow.setMenu(null);
     // enable dev tools good for debug
-    this.mainWindow.webContents.openDevTools();
+    // this.mainWindow.webContents.openDevTools();
     this.mainWindow.on('closed', () => {
       this.mainWindow = null;
     })
