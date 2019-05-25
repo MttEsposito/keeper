@@ -19,4 +19,8 @@ export class FsExtra {
     createFile(path, name) {
         return fse.createFile(`${path}/Keeper-bin/${name}`);
     }
+
+    outPutFile(path,name,data){
+      return fse.outputFile(`${path}/Keeper-bin/${name}`, data);
+    }
 }

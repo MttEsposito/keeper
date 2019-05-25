@@ -5,6 +5,7 @@ import { KeeperComponent } from './keeper.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NgxElectronModule, ElectronService } from 'ngx-electron';
 import { FakeElectronService } from 'tests/electron-faker.service';
+import { ThemeService } from 'src/app/services/theme.service';
 
 describe('KeeperComponent', () => {
   let component: KeeperComponent;
@@ -18,7 +19,7 @@ describe('KeeperComponent', () => {
       ],
       declarations: [ KeeperComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-      providers: [{ provide: ElectronService, useClass: FakeElectronService }]
+      providers: [ThemeService,{ provide: ElectronService, useClass: FakeElectronService }]
 
     })
     .compileComponents();

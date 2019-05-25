@@ -1,7 +1,10 @@
 import { Subject } from 'rxjs';
 
 class Channel {
-    constructor(public name: string, public listener: Function) { }
+    constructor(
+        public name: string,
+        public listener: Function
+    ) { }
 }
 
 export class Message {
@@ -14,7 +17,7 @@ export class FakeElectronService {
 
     private channels: Channel[] = [];
 
-    ipcRenderer = {
+    public ipcRenderer: any = {
         on: (name: string, listener: Function) => {
             this.channels.push(new Channel(name, listener));
         },

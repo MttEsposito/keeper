@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ElectronService } from 'ngx-electron';
 
@@ -13,7 +13,6 @@ import { fades } from './routes/routes.animations';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  encapsulation: ViewEncapsulation.None,
   animations: [fades]
 })
 
@@ -44,7 +43,7 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
     this._loader.loading.subscribe(state => this.isLoading = state);
-    this._auth.userSigned.subscribe(user => { });
+    this._auth.userSigned.subscribe();
     this._theme.defaultTheme();
   }
 

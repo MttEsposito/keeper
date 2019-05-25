@@ -9,6 +9,7 @@ import { ToastService } from 'src/app/services/toast.service';
 
 import { Themes } from 'src/app/models/themes.interface';
 import { Accordion } from 'src/app/models/accordion.interface';
+import { CommonResponse } from 'src/app/models/response.interface';
 
 @Component({
   templateUrl: './settings.component.html',
@@ -25,7 +26,7 @@ export class SettingsComponent implements OnInit {
     private _theme: ThemeService,
     private _toast: ToastService
   ) {
-    this._electron.ipcRenderer.on('changePswReply', (event: any, arg: any) => {
+    this._electron.ipcRenderer.on('changePswReply', (event: any, arg: CommonResponse) => {
       this._ngZone.run(() => {
         this._electronResponse(arg);
       });
@@ -81,7 +82,7 @@ export class SettingsComponent implements OnInit {
     this._theme.changeTheme(this.pickedTheme);
   }
 
-  private _electronResponse(res: any): void {
+  private _electronResponse(res: CommonResponse): void {
     if (res.message !== "Password and confirm password not match!") {
       this.cpswForm.resetForm();
     }

@@ -26,7 +26,7 @@ export class ToastService {
         }).afterDismissed().subscribe(r => {
             setTimeout(() => {
                 this.showUpdateToast();
-            }, 600000)// reshow update every 10 minutes
+            }, 600000)// re-show update every 10 minutes
         });
     }
 

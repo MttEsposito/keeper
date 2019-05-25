@@ -12,6 +12,7 @@ import { Section } from 'src/app/models/section.interface';
   templateUrl: './keeper.component.html',
   styleUrls: ['./keeper.component.scss']
 })
+
 export class KeeperComponent implements OnInit {
 
   constructor(
@@ -21,7 +22,7 @@ export class KeeperComponent implements OnInit {
     private _route: Router,
     private _theme: ThemeService,
   ) {
-    this._electron.ipcRenderer.on('versionReply', (event: any, arg: any) => {
+    this._electron.ipcRenderer.on('versionReply', (event: any, arg: string) => {
       this._ngZone.run(() => {
         this.version = arg;
       });

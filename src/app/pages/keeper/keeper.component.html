@@ -4,7 +4,7 @@
     <mat-sidenav-container class="sidenav-container">
 
       <mat-sidenav #snav mode="side" fixedInViewport="true">
-        
+
         <div class="sidenav-content">
 
           <div class="sidenav-header">
@@ -24,12 +24,12 @@
 
           <div *ngFor="let section of sections">
 
-            <a mat-button class="sidenav-action" [routerLink]="section.link">
+            <a mat-button class="sidenav-action" [routerLinkActive]="'mat-primary'" [routerLink]="section.link">
               <mat-icon>{{section.icon}}</mat-icon> {{section.label}}
             </a>
 
           </div>
-          
+
         </div>
       </mat-sidenav>
 
@@ -38,7 +38,7 @@
         <div class="toolbar-fixed">
 
           <mat-toolbar color="primary">
-            
+
             <button mat-icon-button (click)="snav.toggle()">
               <mat-icon>menu</mat-icon>
             </button>
@@ -67,5 +67,5 @@
     </mat-sidenav-container>
 
   </div>
-  
+
 </ng-container>

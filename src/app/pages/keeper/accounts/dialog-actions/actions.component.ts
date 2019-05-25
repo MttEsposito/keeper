@@ -8,6 +8,8 @@ import { LoaderService } from 'src/app/services/loader.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
 
+import { CommonResponse } from 'src/app/models/response.interface';
+
 @Component({
     templateUrl: './actions.component.html',
     styleUrls: ['./actions.component.scss']
@@ -24,7 +26,7 @@ export class ActionsDialog implements OnInit {
         private _ngZone: NgZone,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
-        this._electron.ipcRenderer.on('actionReply', (event: any, arg: any) => {
+        this._electron.ipcRenderer.on('actionReply', (event: any, arg: CommonResponse) => {
             this._ngZone.run(() => {
                 this._electronResponse(arg);
             });
@@ -80,7 +82,7 @@ export class ActionsDialog implements OnInit {
         this.desc = val.desc;
     }
 
-    private _electronResponse(res: any): void {
+    private _electronResponse(res: CommonResponse): void {
         this._loader.dismiss();
         this._dialogRef.close();
         this._toast.show(res.message, res.result ? "success" : "danger");

@@ -11,6 +11,8 @@ import { LoaderService } from 'src/app/services/loader.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
 
+import { SignInResponse } from 'src/app/models/response.interface';
+
 @Component({
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.scss']
@@ -27,7 +29,7 @@ export class SignInComponent implements OnInit {
     private _router: Router,
     private _auth: AuthService
   ) {
-    this._electron.ipcRenderer.on('signReply', (event: any, arg: any) => {
+    this._electron.ipcRenderer.on('signReply', (event: any, arg: SignInResponse) => {
       this._ngZone.run(() => {
         this._singInReply(arg);
       });
@@ -39,7 +41,6 @@ export class SignInComponent implements OnInit {
   public ngOnInit(): void {
     this.submitted = false;
   }
-
 
   public signInUser(form: NgForm): void {
     this.submitted = true;
@@ -55,14 +56,14 @@ export class SignInComponent implements OnInit {
     });
   }
 
-  private _singInReply(res: any): void {
+  private _singInReply(res: SignInResponse): void {
     this._loader.dismiss();
     if (res.result) {
       this._auth.set(res.user);
       this._router.navigate([`/keeper`]);
     } else {
       this.submitted = false;
-      this._toast.show("User not found!", "danger");
+      this._toast.show(res.message, "danger");
     }
   }
 }
