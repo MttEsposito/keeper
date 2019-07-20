@@ -1,5 +1,9 @@
+// IMPORTS
+// ANGULAR CORE MODULES
 import { trigger, transition, style, query, animate } from "@angular/animations";
+// ***************************
 
+// ANIMATION FADES
 export const fades = trigger('routeAnimations', [
     transition('* <=> *', [
         query(':leave', style({ position: 'absolute', left: 0, right: 0, opacity: 1 }), { optional: true }),

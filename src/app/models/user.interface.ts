@@ -1,4 +1,7 @@
 export interface User {
-    uid?: "string",
-    username?: "string"
+  username?: string;
+  uid?: number;
+  gid?: number;
+  shell?: any;
+  homedir?: string;
 }

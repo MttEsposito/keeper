@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { NgxElectronModule } from 'ngx-electron';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -32,7 +31,6 @@ import { AccountsComponent } from './accounts.component';
         MatButtonModule,
         MatIconModule,
         MatTooltipModule,
-        NgxElectronModule,
         RouterModule.forChild([
             {
                 path: '',

@@ -1,28 +1,35 @@
+// IMPORTS
+// ANGULAR CORE MODULES
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { User } from "../models/user.interface";
+// IMPORT MODELS
+import { User } from "@keeperModels/user.interface";
+// ***************************
 
-@Injectable({providedIn:"root"})
+@Injectable({ providedIn: "root" })
 
 export class AuthService {
 
-    private _user: BehaviorSubject<User> = new BehaviorSubject<User>({});
+  private _user: BehaviorSubject<User> = new BehaviorSubject<User>({});
 
-    public userSigned: Observable<User> = this._user.asObservable();
+  public userSigned: Observable<User> = this._user.asObservable();
 
-    constructor() { }
+  constructor() { }
 
-    public set(user: User): void {
-        this._user.next(user);
-    }
+  // SET THE USER ON LOGIN
+  public set(user: User): void {
+    this._user.next(user);
+  }
 
-    public remove(): void {
-        this._user.next(null);
-    }
+  // REMOVE THE USER ON LOGOFF
+  public remove(): void {
+    this._user.next({});
+  }
 
-    public get(): any {
-        return this._user.value || {};
-    }
+  // GET VALUE OF THE USER
+  public get(): any {
+    return this._user.value || {};
+  }
 
 }

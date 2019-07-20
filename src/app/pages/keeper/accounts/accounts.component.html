@@ -1,90 +1,93 @@
-<ng-container>
-  <mat-card>
+ <mat-card>
 
-    <mat-card-header>
-      <mat-card-title>Accounts</mat-card-title>
-      <mat-card-subtitle>Manage your account data</mat-card-subtitle>
-    </mat-card-header>
+  <mat-card-header>
+    <mat-card-title>Accounts</mat-card-title>
+    <mat-card-subtitle>Manage your account data</mat-card-subtitle>
+  </mat-card-header>
 
-    <mat-card-content>
-      <div class="acc-list">
+  <mat-card-content>
+    <div class="acc-list">
 
-        <button type="button"
-          class="btn-refresh"
-          mat-icon-button
-          (click)="getUserData()"
-          color="primary"
-          [disabled]="hideAll">
-          <mat-icon>refresh</mat-icon>
-        </button>
+      <mat-list>
 
-        <mat-list>
+        <h3 class="acc-visible" mat-subheader>Accounts visibility {{hideAll ?
+          'off':'on'}}
+          <button mat-icon-button (click)="hideAll= !hideAll">
+            <mat-icon>{{hideAll ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </h3>
 
-          <h3 mat-subheader>Accounts visibility {{hideAll ? 'off':'on'}}
-            <button mat-icon-button (click)="hideAll= !hideAll">
-              <mat-icon>{{hideAll ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-          </h3>
+        <div id="Searchbar">
+          <mat-form-field class="full-width">
+            <mat-icon matSuffix>search</mat-icon>
+            <input type="text"
+              #filterInput
+              (keyup)="filter($event.target.value)"
+              [disabled]="hideAll"
+              matInput placeholder="Search...">
+          </mat-form-field>
+        </div>
 
-          <div id="Searchbar">
-            <mat-form-field class="full-width">
-              <mat-icon matSuffix>search</mat-icon>
-              <input (keyup)="filter($event.target.value)" [disabled]="hideAll"
-                type="text" matInput placeholder="Search...">
-            </mat-form-field>
-          </div>
+        <div *ngFor="let acc of viewAcc">
+          <h3 mat-subheader>{{hideAll ? "••••••" : acc.title}}</h3>
+          <mat-list-item>
+            <h4 mat-line>
+              <button type="button"
+                mat-icon-button
+                color="primary"
+                matTooltip="copy"
+                matTooltipPosition="right"
+                (click)="copyToClipboard(acc.username)"
+                [disabled]="hideAll">
+                <mat-icon class="sm-icon">content_copy</mat-icon>
+              </button>
+              {{hideAll ? "••••••" : acc.username }}
+            </h4>
+            <h4 mat-line>
+              <button type="button"
+                mat-icon-button
+                color="primary"
+                matTooltip="copy"
+                matTooltipPosition="right"
+                (click)="copyToClipboard(acc.password)"
+                [disabled]="hideAll">
+                <mat-icon class="sm-icon">content_copy</mat-icon>
+              </button>
+              {{hideAll ? "••••••" : acc.password }}
+            </h4>
+            <p mat-line class="desc-space">{{hideAll ? "••••••" : acc.desc}}</p>
+            <div mat-line align="end">
 
-          <mat-list-item *ngFor="let acc of viewAcc">
-
-              <h4 mat-line>
-                Account: {{hideAll ? "••••••" : acc.title}}
-              </h4>
-
-              <h4 mat-line class="desc-space">
-                <span class="item-user">
-                  Username: {{hideAll ? "••••••" : acc.username }}
-                </span>
-                <span class="item-user">
-                  Password: {{hideAll ? "••••••" : acc.password}}
-                </span>
-              </h4>
-
-              <p mat-line class="desc-space">Description: {{hideAll ? "••••••" :
-                acc.desc}}</p>
-
-              <div mat-line align="end">
-
-                <button type="button"
+              <button type="button"
                 *ngFor="let act of actions"
                 mat-icon-button
                 [color]="act.color"
                 [matTooltip]="act.tooltip"
                 matTooltipPosition="above"
                 (click)="accountsActions(act.action,acc)"
-                [disabled]="hideAll"
-                >
-                  <mat-icon>{{act.icon}}</mat-icon>
-                </button>
+                [disabled]="hideAll">
+                <mat-icon>{{act.icon}}</mat-icon>
+              </button>
 
-              </div>
+            </div>
 
-              <mat-divider [inset]="true"></mat-divider>
+            <mat-divider [inset]="true"></mat-divider>
 
           </mat-list-item>
+        </div>
 
-        </mat-list>
 
-      </div>
+      </mat-list>
 
-    </mat-card-content>
+    </div>
 
-  </mat-card>
+  </mat-card-content>
 
-  <div class="acc-fab-bottom-right">
-    <button type="button" (click)="accountsActions('Add',{})" mat-mini-fab
-      color="primary">
-      <mat-icon class="icon-plus">add</mat-icon>
-    </button>
-  </div>
+</mat-card>
 
-</ng-container>
+<div class="acc-fab-bottom-right">
+  <button type="button" (click)="accountsActions('Add',{})" mat-mini-fab
+    color="primary">
+    <mat-icon class="icon-plus">add</mat-icon>
+  </button>
+</div>

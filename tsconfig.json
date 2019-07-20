@@ -17,6 +17,17 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@keeperServices/*": [
+        "src/app/services/*"
+      ],
+      "@keeperModels/*": [
+        "src/app/models/*"
+      ],
+      "@keeperShared/*": [
+        "src/app/shared/*"
+      ],
+    }
   }
 }

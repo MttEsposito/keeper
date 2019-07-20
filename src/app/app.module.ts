@@ -1,19 +1,23 @@
+// IMPORTS
+// ANGULAR CORE MODULES
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+// ELECTRON MODULE
 import { NgxElectronModule } from 'ngx-electron';
 
+// MATERIAL MODULE
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
-import { ToastService } from './services/toast.service';
-import { ThemeService } from './services/theme.service';
-
+// APP COMPONENT
 import { AppComponent } from './app.component';
-import { UpdateToastModule } from './shared/toast-update/update-toast.module';
+import { SnackbarModule } from '@keeperShared/snackbar/snackbar.module';
 
-import { AppRoutingModule } from "./routes/routes.module";
-
+// ROUTES MODULE
+import { AppRoutingModule } from './routes/routes.module';
+// ***************************
 
 @NgModule({
   declarations: [
@@ -25,12 +29,8 @@ import { AppRoutingModule } from "./routes/routes.module";
     BrowserAnimationsModule,
     MatProgressBarModule,
     MatSnackBarModule,
-    UpdateToastModule,
+    SnackbarModule,
     NgxElectronModule
-  ],
-  providers: [
-    ToastService, 
-    ThemeService
   ],
   bootstrap: [AppComponent]
 })

@@ -5,13 +5,14 @@ import { ElectronService } from 'ngx-electron';
 
 import { MatDialog } from '@angular/material';
 
-import { CreateUserDialog } from './dialog-create-user/create-user.component';
+import { CreatePswDialog } from './dialog-create-password/create-password.component';
 
-import { LoaderService } from 'src/app/services/loader.service';
-import { AuthService } from 'src/app/services/auth.service';
-import { ToastService } from 'src/app/services/toast.service';
+import { LoaderService } from '@keeperServices/loader.service';
+import { AuthService } from '@keeperServices/auth.service';
+import { ToastService } from '@keeperServices/toast.service';
+import { TitleService } from '@keeperServices/title.service';
 
-import { SignInResponse } from 'src/app/models/response.interface';
+import { AccessResponse } from '@keeperModels/response.interface';
 
 @Component({
   templateUrl: './sign-in.component.html',
@@ -27,9 +28,18 @@ export class SignInComponent implements OnInit {
     private _electron: ElectronService,
     private _ngZone: NgZone,
     private _router: Router,
-    private _auth: AuthService
+    private _auth: AuthService,
+    private _title: TitleService,
   ) {
-    this._electron.ipcRenderer.on('signReply', (event: any, arg: SignInResponse) => {
+    this._electron.ipcRenderer.on('userExistReply', (event: any, arg: boolean) => {
+      this._ngZone.run(() => {
+        if (!arg) {
+          this.userNotExist = true;
+          this._openDialog();
+        }
+      });
+    });
+    this._electron.ipcRenderer.on('accessReply', (event: any, arg: AccessResponse) => {
       this._ngZone.run(() => {
         this._singInReply(arg);
       });
@@ -37,33 +47,35 @@ export class SignInComponent implements OnInit {
   }
 
   public submitted: boolean = false;
+  public userNotExist: boolean = false;
 
   public ngOnInit(): void {
-    this.submitted = false;
+    this._title.setTitle("Keeper-Access");
+    this._electron.ipcRenderer.send("userExist", {});
   }
 
-  public signInUser(form: NgForm): void {
-    this.submitted = true;
-    this._loader.present();
-    this._electron.ipcRenderer.send("signIn", form.value);
+  public accessUser(form: NgForm): void {
+      this.submitted = true;
+      this._loader.present();
+      this._electron.ipcRenderer.send("access", form.value);
   }
 
-  public openDialog(): void {
-    this._dialog.open(CreateUserDialog, {
+  private _openDialog(): void {
+    this._dialog.open(CreatePswDialog, {
       width: '600px',
       disableClose: true,
       autoFocus: false,
-    });
+    }).afterClosed().subscribe(c => this.userNotExist = false);
   }
 
-  private _singInReply(res: SignInResponse): void {
+  private _singInReply(res: AccessResponse): void {
     this._loader.dismiss();
     if (res.result) {
       this._auth.set(res.user);
       this._router.navigate([`/keeper`]);
     } else {
       this.submitted = false;
-      this._toast.show(res.message, "danger");
+      this._toast.openSnackbar(res.message, "danger", true, false);
     }
   }
 }

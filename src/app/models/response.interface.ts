@@ -3,7 +3,7 @@ import { Accounts } from './accounts.interface';
 
 // all interface of electron response
 
-interface SignInResponse {
+interface AccessResponse {
   result: boolean;
   user?: User;
   message?: string;
@@ -19,4 +19,4 @@ interface GetDataResponse {
   data: Array<Accounts>
 }
 
-export { SignInResponse, CommonResponse, GetDataResponse }
+export { AccessResponse, CommonResponse, GetDataResponse }

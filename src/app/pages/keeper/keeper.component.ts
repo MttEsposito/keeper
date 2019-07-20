@@ -2,11 +2,10 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { ElectronService } from 'ngx-electron';
 
-import { AuthService } from 'src/app/services/auth.service';
-import { ThemeService } from 'src/app/services/theme.service';
+import { AuthService } from '@keeperServices/auth.service';
 
-import { User } from 'src/app/models/user.interface';
-import { Section } from 'src/app/models/section.interface';
+import { User } from '@keeperModels/user.interface';
+import { Section } from '@keeperModels/section.interface';
 
 @Component({
   templateUrl: './keeper.component.html',
@@ -20,7 +19,6 @@ export class KeeperComponent implements OnInit {
     private _electron: ElectronService,
     private _ngZone: NgZone,
     private _route: Router,
-    private _theme: ThemeService,
   ) {
     this._electron.ipcRenderer.on('versionReply', (event: any, arg: string) => {
       this._ngZone.run(() => {
@@ -37,15 +35,12 @@ export class KeeperComponent implements OnInit {
   public user: User;
   public version: string = "";
   public readonly sections: Array<Section> = [
-    { label: "Accounts", icon: "person", link: "/keeper/accounts" },
-    { label: "Settings", icon: "settings", link: "/keeper/settings" }
+    { label: "Accounts", icon: "person", link: "/keeper/accounts", preload:"accounts" },
+    { label: "Settings", icon: "settings", link: "/keeper/settings", preload: "settings" }
   ]
 
   public ngOnInit(): void {
     this.user = this._auth.get();
-    setTimeout(() => {
-      this._theme.setTheme();
-    }, 400);
     this._getVersion();
   }
 
@@ -56,9 +51,6 @@ export class KeeperComponent implements OnInit {
   private _signOutRedirect(): void {
     this._auth.remove();
     this._route.navigate(["/sign-in"]);
-    setTimeout(()=>{
-      this._theme.defaultTheme();
-    },400);
   }
 
   private _getVersion(): void {

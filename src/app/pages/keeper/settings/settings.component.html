@@ -1,103 +1,116 @@
-<ng-container>
+ <mat-card>
 
-  <mat-card>
+  <mat-card-header>
+    <mat-card-title>Settings</mat-card-title>
+    <mat-card-subtitle>Manage settings for the app</mat-card-subtitle>
+  </mat-card-header>
 
-    <mat-card-header>
-      <mat-card-title>Settings</mat-card-title>
-      <mat-card-subtitle>Manage settings for the app</mat-card-subtitle>
-    </mat-card-header>
+  <mat-card-content>
 
-    <mat-card-content>
+    <div>
+      <mat-accordion multi="true" class="example-headers-align">
+        <mat-expansion-panel hideToggle *ngFor="let acc of accordions">
+          <mat-expansion-panel-header>
 
-      <div>
-        <mat-accordion multi="true" class="example-headers-align">
-          <mat-expansion-panel hideToggle *ngFor="let acc of accordions">
-            <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{acc.title}}
+            </mat-panel-title>
 
-              <mat-panel-title>
-                {{acc.title}}
-              </mat-panel-title>
+            <mat-panel-description>
+              {{acc.description}}
+              <mat-icon color="primary">{{acc.icon}}</mat-icon>
+            </mat-panel-description>
 
-              <mat-panel-description>
-                {{acc.description}}
-                <mat-icon color="primary">{{acc.icon}}</mat-icon>
-              </mat-panel-description>
+          </mat-expansion-panel-header>
 
-            </mat-expansion-panel-header>
+          <ng-template matExpansionPanelContent>
+            <ng-container [ngTemplateOutlet]="this[acc.contentId]"></ng-container>
+          </ng-template>
 
-            <ng-template matExpansionPanelContent>
-              <ng-container [ngTemplateOutlet]="this[acc.contentId]"></ng-container>
-            </ng-template>
+        </mat-expansion-panel>
 
-          </mat-expansion-panel>
+      </mat-accordion>
+    </div>
 
-        </mat-accordion>
-      </div>
+  </mat-card-content>
 
-    </mat-card-content>
+</mat-card>
 
-  </mat-card>
+<!-- template form change password for accordion -->
+<ng-template #formCpassword>
+  <form #cpassword="ngForm" autocomplete="off"
+    (ngSubmit)="changePassword(cpassword)">
+    <table class="full-width" cellspacing="5">
+      <tr>
+        <td>
+          <mat-form-field class="full-width">
+            <input [type]="hide ? 'password' : 'text'"
+              ngModel
+              matInput
+              minlength="7"
+              required
+              name="password"
+              placeholder="Password">
+            <mat-icon matSuffix (click)="hide= !hide">{{hide ?
+              'visibility_off' : 'visibility'}}</mat-icon>
+            <mat-hint align="end">{{formHint}}</mat-hint>
 
-  <!-- template form change password for accordion -->
-  <ng-template #formCpassword>
-    <form #cpassword="ngForm" autocomplete="off"
-      (ngSubmit)="changePassword(cpassword)">
-      <table class="full-width" cellspacing="5">
-        <tr>
-          <td>
-            <mat-form-field class="full-width">
-              <input [type]="hide ? 'password' : 'text'"
-                ngModel
-                matInput
-                minlength="7"
-                required
-                name="password"
-                placeholder="Password">
-              <mat-icon matSuffix (click)="hide= !hide">{{hide ?
-                'visibility_off' : 'visibility'}}</mat-icon>
-              <mat-hint align="end">{{formHint}}</mat-hint>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-form-field class="full-width">
+            <input [type]="hide ? 'password' : 'text'"
+              ngModel
+              matInput
+              minlength="7"
+              required
+              name="cpassword"
+              placeholder="Confirm password">
+            <mat-icon matSuffix (click)="hide= !hide">{{hide ?
+              'visibility_off' : 'visibility'}}</mat-icon>
+            <mat-hint align="end">{{formHint}}</mat-hint>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td style="text-align:right">
+          <button type="submit" [disabled]="cpassword.invalid ||
+            submitted" mat-raised-button color="primary"> Change
+          </button>
+        </td>
+      </tr>
+    </table>
+  </form>
+</ng-template>
 
-            </mat-form-field>
-          </td>
-          <td>
-            <mat-form-field class="full-width">
-              <input [type]="hide ? 'password' : 'text'"
-                ngModel
-                matInput
-                minlength="7"
-                required
-                name="cpassword"
-                placeholder="Confirm password">
-              <mat-icon matSuffix (click)="hide= !hide">{{hide ?
-                'visibility_off' : 'visibility'}}</mat-icon>
-              <mat-hint align="end">{{formHint}}</mat-hint>
-            </mat-form-field>
-          </td>
-        </tr>
-        <tr>
-          <td></td>
-          <td style="text-align:right">
-            <button type="submit" [disabled]="cpassword.invalid ||
-              submitted" mat-raised-button color="primary"> Change
-            </button>
-          </td>
-        </tr>
-      </table>
-    </form>
-  </ng-template>
+<!-- template form change theme for accordion -->
+<ng-template #themePicker>
+  <mat-form-field>
+    <mat-label>Pick a theme</mat-label>
+    <mat-select [(ngModel)]="pickedTheme"
+      (selectionChange)="changeTheme()">
+      <mat-option *ngFor="let theme of themes"
+        [value]="theme.value">
+        {{theme.label}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</ng-template>
 
-  <!-- template form change theme for accordion -->
-  <ng-template #themePicker>
-    <mat-form-field>
-      <mat-label>Pick a theme</mat-label>
-      <mat-select [(ngModel)]="pickedTheme"
-        (selectionChange)="changeTheme()">
-        <mat-option *ngFor="let theme of themes"
-          [value]="theme.value">
-          {{theme.label}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </ng-template>
-
-</ng-container>
+<ng-template #exportData>
+  <div class="export-container">
+    <input #fileInput hidden type="file" (change)="pickerChange($event)"
+      [(ngModel)]="exportPathModel" webkitdirectory directory/>
+    <div class="folder-picked">
+      <button color="primary" type="button" mat-icon-button
+        (click)="fileInput.click()">
+        <mat-icon>folder</mat-icon>
+      </button>
+      <span class="text-color">{{exportPathModel ? output : "Click on the folder
+        icon"}}</span>
+    </div>
+    <button mat-raised-button type="button" (click)="exportFile()"
+      [disabled]="!exportPathModel" color="primary"> Export !</button>
+  </div>
+</ng-template>

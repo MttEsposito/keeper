@@ -13,7 +13,7 @@ setTimeout(() => {
   platformBrowserDynamic().bootstrapModule(AppModule)
     .then(res => {
       // after bootstrap remove the preloader from dom
-      document.querySelector("#Preloader").remove();
+      document.getElementById("Preloader").remove();
     })
     .catch(err => console.error(err));
 }, 2000);// 2 seconds

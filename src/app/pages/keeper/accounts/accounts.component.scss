@@ -2,18 +2,20 @@
   margin-left: 2px;
 }
 
+.acc-visible{
+  padding-left: 0;
+}
+
 .full-width {
   width: 100%;
 }
 
-.btn-refresh {
-  position: absolute;
-  top: -12.5px;
-  left: 5px;
+.sm-icon{
+  transform: scale(0.8);
 }
 
 .desc-space {
-  padding: 0.5em 0 0 0 !important;
+  padding: 1em 0 0 0;
 }
 
 .acc-list {

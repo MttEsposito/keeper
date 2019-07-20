@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
-import { NgxElectronModule } from 'ngx-electron';
-
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -27,7 +25,6 @@ import { SettingsComponent } from './settings.component';
         MatSelectModule,
         MatButtonModule,
         MatIconModule,
-        NgxElectronModule,
         RouterModule.forChild([
             {
                 path: '',

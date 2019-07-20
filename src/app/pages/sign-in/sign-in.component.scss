@@ -1,20 +1,24 @@
-.sign-spacer{
-    padding: 2em;
+.sign-spacer {
+  padding: 2em;
+  transition: 0.3s;
 
-    .sign-form{
-        width: 100%;
-        text-align: center;
-        
-        .sign-input{
-            width: 100%;
-        }
+  .sign-form {
+    width: 100%;
+    text-align: center;
+
+    .sign-input {
+      width: 100%;
     }
-
+  }
 }
 
-.sign-fab-bottom-right{
-    position: fixed;
-    bottom: 8px;
-    right: 8px;
-    z-index: 500;
+.created {
+  filter: blur(5px);
+}
+
+.sign-fab-bottom-right {
+  position: fixed;
+  bottom: 8px;
+  right: 8px;
+  z-index: 500;
 }

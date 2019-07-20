@@ -7,6 +7,22 @@
   justify-content: space-between;
   align-items: center;
 }
-.full-width{
-  width:100%;
+.full-width {
+  width: 100%;
+}
+
+.export-container {
+  justify-content: space-between;
+  display: flex;
+  .folder-picked {
+    border: 1px solid #ccc;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+    border-right-color: transparent;
+    width: 100%;
+  }
+  button{
+    border-top-left-radius: 0!important;
+    border-bottom-left-radius: 0!important;
+  }
 }

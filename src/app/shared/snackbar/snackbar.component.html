@@ -1,0 +1,17 @@
+<!-- MESSAGE SNACKBAR CONTAINER -->
+<span class="app-snackbar-toast">
+  {{data.message}}
+  <!-- CONTAINER FOR UPDATE TEMPLATE -->
+  <ng-container *ngTemplateOutlet="data.isUpdate ? updateBtn : dismiss"></ng-container>
+</span>
+
+<!-- template for button update -->
+<ng-template #updateBtn>
+  <button mat-button class="btn-toast" (click)="installUpdate()">Install</button>
+  <button mat-button class="btn-toast" (click)="toast.dismiss()">Later</button>
+</ng-template>
+
+<!-- template for button dismiss -->
+<ng-template #dismiss>
+  <button mat-button class="btn-toast" (click)="toast.dismiss()">Close</button>
+</ng-template>

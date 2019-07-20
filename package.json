@@ -1,56 +1,58 @@
 {
   "name": "keeper",
   "description": "keeper is a tool for saving offline data account",
-  "main": "electron_main.js",
-  "version": "0.3.0",
+  "main": "main.js",
+  "version": "0.4.0",
   "author": "Mattia Esposito",
   "license": "ISC",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "electron .",
+    "build": "ng build --prod && npm run gen-main",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "electron": "electron .",
-    "build-prod": "ng build --prod && npm run gen-main",
-    "gen-main": "node scripts/setup.js --main",
-    "build-win-32": "build -w --ia32",
-    "build-win-64": "build -w --x64"
+    "gen-main": "cd src/electron && tsc && rollup --config && rmdir /Q /S dist",
+    "pack-win32": "electron-builder -w --ia32",
+    "pack-win64": "electron-builder -w --x64"
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~7.2.0",
+    "@angular/animations": "^7.2.15",
     "@angular/cdk": "~7.3.7",
-    "@angular/common": "~7.2.0",
-    "@angular/compiler": "~7.2.0",
-    "@angular/core": "~7.2.0",
-    "@angular/forms": "~7.2.0",
+    "@angular/common": "^7.2.15",
+    "@angular/compiler": "^7.2.15",
+    "@angular/core": "^7.2.15",
+    "@angular/forms": "^7.2.15",
     "@angular/material": "^7.3.7",
-    "@angular/platform-browser": "~7.2.0",
-    "@angular/platform-browser-dynamic": "~7.2.0",
-    "@angular/router": "~7.2.0",
-    "core-js": "^2.5.4",
+    "@angular/platform-browser": "^7.2.15",
+    "@angular/platform-browser-dynamic": "^7.2.15",
+    "@angular/router": "^7.2.15",
+    "core-js": "^2.6.9",
     "crypto-js": "^3.1.9-1",
-    "electron-log": "^3.0.5",
-    "electron-updater": "^4.0.6",
+    "electron-log": "^3.0.6",
+    "electron-store": "^4.0.0",
+    "electron-updater": "^4.0.14",
     "fs-extra": "^7.0.1",
     "material-design-icons": "^3.0.1",
     "ngx-electron": "^2.1.1",
     "node-notifier": "^5.4.0",
     "os": "^0.1.1",
     "rxjs": "~6.3.3",
-    "tslib": "^1.9.0",
+    "tslib": "^1.10.0",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.13.0",
-    "@angular/cli": "~7.3.8",
-    "@angular/compiler-cli": "~7.2.0",
-    "@angular/language-service": "~7.2.0",
+    "@angular-devkit/build-angular": "^0.13.9",
+    "@angular/cli": "^7.3.8",
+    "@angular/compiler-cli": "^7.2.15",
+    "@angular/language-service": "^7.2.15",
+    "@types/crypto-js": "^3.1.43",
+    "@types/fs-extra": "^8.0.0",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "~8.9.4",
+    "@types/node": "^12.0.12",
+    "@types/node-notifier": "^5.4.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-minify": "^0.5.0",
     "codelyzer": "~4.5.0",
@@ -66,11 +68,12 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "typescript": "~3.2.2"
+    "typescript": "^3.2.4"
   },
   "build": {
     "appId": "com.keeper.app",
     "productName": "keeper",
+    "copyright": "Copyright © Espotech 2019",
     "asar": true,
     "directories": {
       "output": "public/windows"
@@ -85,6 +88,13 @@
         "releaseType": "release"
       }
     ],
+    "win": {
+      "target": "nsis",
+      "publisherName": "Espotech software",
+      "icon": "icon.ico",
+      "verifyUpdateCodeSignature": false,
+      "requestedExecutionLevel": "highestAvailable"
+    },
     "nsis": {
       "oneClick": false,
       "perMachine": true,
@@ -92,15 +102,10 @@
       "allowToChangeInstallationDirectory": true,
       "deleteAppDataOnUninstall": true,
       "createDesktopShortcut": true,
+      "shortcutName": "keeper",
       "createStartMenuShortcut": true,
-      "uninstallDisplayName": "Keeper uninstall"
-    },
-    "win": {
-      "target": "nsis",
-      "publisherName": "hysteria software",
-      "icon": "icon.ico",
-      "verifyUpdateCodeSignature": false,
-      "requestedExecutionLevel": "highestAvailable"
+      "runAfterFinish": false,
+      "uninstallDisplayName": "Uninstall"
     }
   }
 }
