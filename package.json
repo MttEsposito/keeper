@@ -36,7 +36,7 @@
     "fs-extra": "^7.0.1",
     "material-design-icons": "^3.0.1",
     "ngx-electron": "^2.1.1",
-    "node-notifier": "^5.4.0",
+    "node-notifier": "^8.0.1",
     "os": "^0.1.1",
     "rxjs": "~6.3.3",
     "tslib": "^1.10.0",
